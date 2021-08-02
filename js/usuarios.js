@@ -8,43 +8,44 @@ import {
   cod, getForánea, muestraError
 } from "../lib/util.js";
 import {
-  muestraUsuarios
+  muestraAsegurados,
+  muestraAsegurados
 } from "./navegacion.js";
 
-const SIN_ALUMNOS = /* html */
+const SIN_SEGUROS = /* html */
   `<option value="">
-    -- Sin Alumnos --
+    -- Sin Seguros --
   </option>`;
 
 const firestore = getFirestore();
 const daoRol = firestore.
   collection("Rol");
-const daoAlumno = firestore.
-  collection("Alumno");
-const daoUsuario = firestore.
-  collection("Usuario");
+const daoSeguro = firestore.
+  collection("Seguro");
+const daoAsegurado = firestore.
+  collection("Asegurado");
 
 /**
  * @param {
     HTMLSelectElement} select
  * @param {string} valor */
 export function
-  selectAlumnos(select,
+  selectSeguros(select,
     valor) {
   valor = valor || "";
-  daoAlumno.
+  daoSeguro.
     orderBy("nombre").
     onSnapshot(
       snap => {
-        let html = SIN_ALUMNOS;
+        let html = SIN_SEGUROS;
         snap.forEach(doc =>
-          html += htmlAlumno(
+          html += htmlSeguro(
             doc, valor));
         select.innerHTML = html;
       },
       e => {
         muestraError(e);
-        selectAlumnos(
+        selectSeguros(
           select, valor);
       }
     );
@@ -56,13 +57,13 @@ export function
   DocumentSnapshot} doc
  * @param {string} valor */
 function
-  htmlAlumno(doc, valor) {
+  htmlSeguro(doc, valor) {
   const selected =
     doc.id === valor ?
       "selected" : "";
   /**
    * @type {import("./tipos.js").
-                  Alumno} */
+                  } */
   const data = doc.data();
   return (/* html */
     `<option
@@ -143,25 +144,25 @@ export function
  * @param {FormData} formData
  * @param {string} id  */
 export async function
-  guardaUsuario(evt, formData,
+  guardaAsegurado(evt, formData,
     id) {
   try {
     evt.preventDefault();
-    const alumnoId =
+    const SeguroId =
       getForánea(formData,
-        "alumnoId");
+        "SeguroId");
     const rolIds =
       formData.getAll("rolIds");
-    await daoUsuario.
+    await daoAsegurado.
       doc(id).
       set({
-        alumnoId,
+        SeguroId,
         rolIds
       });
     const avatar =
       formData.get("avatar");
     await subeStorage(id, avatar);
-    muestraUsuarios();
+    muestraAsegurados();
   } catch (e) {
     muestraError(e);
   }
