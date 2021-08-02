@@ -12,7 +12,7 @@ import {
   checksRoles,
   guardaAsegurado,
   selectSeguros
-} from "./Asegurados.js";
+} from "./usuarios.js";
 
 /** @type {HTMLFormElement} */
 const forma = document["forma"];
@@ -23,13 +23,16 @@ const listaRoles = document.
 getAuth().onAuthStateChanged(
   protege, muestraError);
 
-async function protege(Asegurado) {
-  if (tieneRol(Asegurado,
+/** @param {import(
+    "../lib/tiposFire.js").User}
+    usuario */
+async function protege(asegurado) {
+  if (tieneRol(asegurado,
     ["Administrador"])) {
     forma.addEventListener(
       "submit", guarda);
     selectSeguros(
-      forma.SeguroId, "");
+      forma.seguroId, "");
     checksRoles(listaRoles, []);
   }
 }
