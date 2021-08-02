@@ -19,7 +19,7 @@ import {
   checksRoles,
   guardaAsegurado,
   selectSeguros
-} from "./CtrlAsegurados";
+} from "./usuarios.js";
 
 const params =
   new URL(location.href).
@@ -37,8 +37,11 @@ const listaRoles = document.
 getAuth().onAuthStateChanged(
   protege, muestraError);
 
-async function protege(Asegurado) {
-  if (tieneRol(Asegurado,
+/** @param {import(
+    "../lib/tiposFire.js").User}
+    usuario */
+async function protege(asegurado) {
+  if (tieneRol(asegurado,
     ["Administrador"])) {
     busca();
   }
@@ -55,8 +58,8 @@ async function busca() {
       img.src =
         await urlStorage(id);
       selectSeguros(
-        forma.SeguroId,
-        data.SeguroId)
+        forma.seguroId,
+        data.seguroId)
       checksRoles(
         listaRoles, data.rolIds);
       forma.addEventListener(
