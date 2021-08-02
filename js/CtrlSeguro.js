@@ -29,8 +29,8 @@ getAuth().onAuthStateChanged(
 /** @param {import(
     "../lib/tiposFire.js").User}
     usuario */
-async function protege(Asegurado) {
-  if (tieneRol(Asegurado,
+async function protege(asegurado) {
+  if (tieneRol(asegurado,
     ["Administrador"])) {
     busca();
   }
@@ -48,7 +48,7 @@ async function busca() {
       /**
        * @type {
           import("./tipos.js").
-                  } */
+                  Alumno} */
       const data = doc.data();
       forma.matricula.value = data.matricula;
       forma.nombre.value = data.nombre || "";
@@ -82,10 +82,10 @@ async function guarda(evt) {
       new FormData(forma);
     const matricula = getString(
         formData, "matricula").trim();  
-    const nombre = getString(formData, "Nombre Completo").trim();
-    const nombres = getString(formData, "Nombre Seguro").trim();
+    const nombre = getString(formData, "nombre").trim();
+    const nombres = getString(formData, "Nombre del Seguro").trim();
     const auto = getString(formData, "Auto").trim();
-    const modeloa = getString(formData, "Modelo").trim();
+    const modeloa = getString(formData, "Modelo Asegurado").trim();
     const poliza = getString(formData, "Poliza").trim();
     const telefono = getString(formData, "telefono").trim();
     const correo = getString(formData, "correo").trim();
