@@ -21,8 +21,8 @@ class MiNav extends HTMLElement {
     this.ul =
       this.querySelector("ul");
     getAuth().onAuthStateChanged(
-      usuario => this.
-        cambiaUsuario(usuario),
+      Asegurado => this.
+        cambiaAsegurado(Asegurado),
       muestraError);
   }
 
@@ -30,7 +30,7 @@ class MiNav extends HTMLElement {
    * @param {import(
       "../lib/tiposFire.js").User}
       usu */
-      async cambiaUsuario(usu) {
+      async cambiaAsegurado(usu) {
         if (usu && usu.email) {
           let html = "";
           const roles =
@@ -42,7 +42,7 @@ class MiNav extends HTMLElement {
             html += /* html */
               `<li>
                 <a href=
-                  "chat.html">Chat</a>
+                  "chat.html">ChatBot</a>
               </li>`;
           }
           /* Enlaces para solo
@@ -53,11 +53,11 @@ class MiNav extends HTMLElement {
             html += /* html */
               `<li>
                 <a href=
-    "alumnos.html">Alumnos</a>
+    "Seguros.html">Seguros</a>
               </li>
               <li>
                 <a href=
-          "usuarios.html">Usuarios</a>
+          "Asegurados.html">Asegurados</a>
               </li>`;
           }
           this.ul.innerHTML += html;
