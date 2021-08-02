@@ -7,8 +7,8 @@ import {
 } from "../lib/util.js";
 
 const firestore = getFirestore();
-const daoUsuario = firestore.
-  collection("Usuario");
+const daoAsegurado = firestore.
+  collection("Asegurado");
 
 export async function
   iniciaSesión() {
@@ -37,11 +37,11 @@ export async function
  * @param {string[]} roles
  * @returns {Promise<boolean>} */
 export async function
-  tieneRol(usuario, roles) {
-  if (usuario && usuario.email) {
+  tieneRol(Asegurado, roles) {
+  if (Asegurado && Asegurado.email) {
     const rolIds =
       await cargaRoles(
-        usuario.email);
+        Asegurado.email);
     for (const rol of roles) {
       if (rolIds.has(rol)) {
         return true;
@@ -70,7 +70,7 @@ export async function
 export async function
   cargaRoles(email) {
   let doc =
-    await daoUsuario.
+    await daoAsegurado.
       doc(email).
       get();
   if (doc.exists) {
@@ -80,7 +80,7 @@ export async function
         Usuario} */
     const data = doc.data();
     return new Set(
-      data.rolIds || []);
+      data.rolds || []);
   } else {
     return new Set();
   }
