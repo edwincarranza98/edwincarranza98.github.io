@@ -5,8 +5,7 @@
 :root {
   font-family: sans-serif;
   --col-active: #4646462c;
-  --color-header: white;
-  --colorMiNav: white;
+  
 }
 
 body {
@@ -60,3 +59,4 @@ p label>* {
   box-sizing: border-box;
   width: 100%;
 }
+
