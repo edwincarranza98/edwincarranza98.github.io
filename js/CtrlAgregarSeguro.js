@@ -21,8 +21,11 @@ const forma = document["forma"];
 getAuth().onAuthStateChanged(
   protege, muestraError);
 
-async function protege(Asegurado) {
-  if (tieneRol(Asegurado,
+/** @param {import(
+    "../lib/tiposFire.js").User}
+    usuario */
+async function protege(asegurado) {
+  if (tieneRol(asegurado,
     ["Administrador"])) {
     forma.addEventListener(
       "submit", guarda);
@@ -37,7 +40,7 @@ async function guarda(evt) {
       new FormData(forma);
     const matricula = getString(
         formData, "matricula").trim();  
-    const nombre = getString(formData, "Nombre Completo").trim();
+    const nombre = getString(formData, "nombre").trim();
     const nombres = getString(formData, "Nombre Seguro").trim();
     const auto = getString(formData, "Auto").trim();
     const modeloa = getString(formData, "Modelo").trim();
@@ -48,7 +51,7 @@ async function guarda(evt) {
     /**
      * @type {
         import("./tipos.js").
-                } */
+                Alumno} */
     const modelo = {
       matricula,
       nombre,
@@ -67,4 +70,6 @@ async function guarda(evt) {
     muestraError(e);
   }
 }
+
+
 
