@@ -4,22 +4,23 @@
  */
 
 /**
- * @typedef {Object} Alumno
+ * @typedef {Object} Seguro
  * @property {string} nombre
  */
 
 /**
- * @typedef {Object} Usuario
+ * @typedef {Object} Asegurado
  * @property {string[]} rolIds
- * @property {string} alumnoId
+ * @property {string} SeguroId
  */
 
 // @ts-nocheck
 /**
  * @typedef {Object} Mensaje
- * @property {string} usuarioId
+ * @property {string} AseguradoId
  * @property {string} texto
  * @property {firebase.firestore.Timestamp} timestamp
  */
 
 export const __tipos = 0;
+
