@@ -3,7 +3,8 @@ class MiFooter
   connectedCallback() {
     this.innerHTML = /* html */
       `<p>
-        
+        &copy; 2021
+        Carranza Landa Edwin Ratziel.
       </p>`;
   }
 }
