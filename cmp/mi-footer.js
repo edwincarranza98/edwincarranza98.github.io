@@ -3,8 +3,7 @@ class MiFooter
   connectedCallback() {
     this.innerHTML = /* html */
       `<p>
-        &copy; 2021
-        Ricardo Armando Machorro Reyes.
+        
       </p>`;
   }
 }
