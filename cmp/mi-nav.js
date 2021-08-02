@@ -30,7 +30,7 @@ class MiNav extends HTMLElement {
    * @param {import(
       "../lib/tiposFire.js").User}
       usu */
-      async cambiaasegurado(usu) {
+      async cambiaAsegurado(usu) {
         if (usu && usu.email) {
           let html = "";
           const roles =
@@ -42,7 +42,7 @@ class MiNav extends HTMLElement {
             html += /* html */
               `<li>
                 <a href=
-                  "chat.html">ChatBot</a>
+                  "chat.html">Chat</a>
               </li>`;
           }
           /* Enlaces para solo
@@ -53,11 +53,11 @@ class MiNav extends HTMLElement {
             html += /* html */
               `<li>
                 <a href=
-    "Seguros.html">Seguros</a>
+    "seguros.html">Seguros</a>
               </li>
               <li>
                 <a href=
-          "Asegurados.html">Asegurados</a>
+          "asegurados.html">Asegurados</a>
               </li>`;
           }
           this.ul.innerHTML += html;
