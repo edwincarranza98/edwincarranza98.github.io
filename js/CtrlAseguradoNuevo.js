@@ -10,9 +10,9 @@ import {
 } from "./seguridad.js";
 import {
   checksRoles,
-  guardaUsuario,
-  selectAlumnos
-} from "./usuarios.js";
+  guardaAsegurado,
+  selectSeguros
+} from "./Asegurados.js";
 
 /** @type {HTMLFormElement} */
 const forma = document["forma"];
@@ -23,16 +23,13 @@ const listaRoles = document.
 getAuth().onAuthStateChanged(
   protege, muestraError);
 
-/** @param {import(
-    "../lib/tiposFire.js").User}
-    usuario */
-async function protege(usuario) {
-  if (tieneRol(usuario,
+async function protege(Asegurado) {
+  if (tieneRol(Asegurado,
     ["Administrador"])) {
     forma.addEventListener(
       "submit", guarda);
-    selectAlumnos(
-      forma.alumnoId, "");
+    selectSeguros(
+      forma.SeguroId, "");
     checksRoles(listaRoles, []);
   }
 }
@@ -43,6 +40,6 @@ async function guarda(evt) {
     new FormData(forma);
   const id = getString(
     formData, "cue").trim();
-  await guardaUsuario(evt,
+  await guardaAsegurado(evt,
     formData, id);
 }
