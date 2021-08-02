@@ -25,8 +25,8 @@ getAuth().
 /** @param {import(
     "../lib/tiposFire.js").User}
     usuario */
-async function protege(Asegurado) {
-  if (tieneRol(Asegurado,
+async function protege(asegurado) {
+  if (tieneRol(asegurado,
     ["Administrador"])) {
     consulta();
   }
@@ -51,7 +51,8 @@ function htmlLista(snap) {
   } else {
     html += /* html */
       `<li class="vacio">
-        -- No hay Seguros Registrados. --
+        -- No sea ha registrado un 
+        Seguro. --
       </li>`;
   }
   lista.innerHTML = html;
@@ -64,7 +65,7 @@ function htmlLista(snap) {
 function htmlFila(doc) {
   /**
    * @type {import("./tipos.js").
-                  } */
+                  Alumno} */
   const data = doc.data();
   const matricula = cod(data.matricula);
   const nombre = cod(data.nombre);
@@ -78,7 +79,7 @@ function htmlFila(doc) {
   return ( /* html */
     `<li>
       <a class="fila" href=
-  "Seguro.html?${parámetros}">
+  "seguro.html?${parámetros}">
         <strong class="primario">
           ${matricula} ${nombre} ${dformat}
         </strong>
@@ -92,5 +93,6 @@ function errConsulta(e) {
   muestraError(e);
   consulta();
 }
+
 
 
