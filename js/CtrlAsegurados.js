@@ -28,8 +28,11 @@ const daoAsegurado = firestore.
 getAuth().onAuthStateChanged(
   protege, muestraError);
 
-async function protege(Asegurado) {
-  if (tieneRol(Asegurado,
+/** @param {import(
+    "../lib/tiposFire.js").User}
+    usuario */
+async function protege(asegurado) {
+  if (tieneRol(asegurado,
     ["Administrador"])) {
     consulta();
   }
@@ -49,17 +52,20 @@ async function htmlLista(snap) {
   if (snap.size > 0) {
     /** @type {
           Promise<string>[]} */
-    let Asegurados = [];
-    snap.forEach(doc => Asegurados.
+    let asegurados = [];
+    snap.forEach(doc => asegurados.
       push(htmlFila(doc)));
     const htmlFilas =
-      await Promise.all(Asegurados);
-    
+      await Promise.all(asegurados);
+    /* Junta el todos los
+     * elementos del arreglo en
+     * una cadena. */
     html += htmlFilas.join("");
   } else {
     html += /* html */
       `<li class="vacio">
-        -- Por el momento no se tiene ningun Asegurado registrado. --
+        -- No hay asegurados
+        registrados. --
       </li>`;
   }
   lista.innerHTML = html;
@@ -76,9 +82,9 @@ async function htmlFila(doc) {
   const data = doc.data();
   const img = cod(
     await urlStorage(doc.id));
-  const Seguro =
+  const seguro =
     await buscaSeguro(
-      data.SeguroId);
+      data.seguroId);
   const roles =
     await buscaRoles(data.rolIds);
   const parámetros =
@@ -88,7 +94,7 @@ async function htmlFila(doc) {
     `<li>
       <a class="fila conImagen"
           href=
-    "Asegurado.html?${parámetros}">
+    "asegurado.html?${parámetros}">
         <span class="marco">
           <img src="${img}"
             alt="Falta el Avatar">
@@ -100,7 +106,7 @@ async function htmlFila(doc) {
           </strong>
           <span
               class="secundario">
-            ${Seguro}<br>
+            ${seguro}<br>
             ${roles}
           </span>
         </span>
@@ -122,7 +128,7 @@ async function
       /**
        * @type {import(
           "./tipos.js").
-            } */
+            Alumno} */
       const data = doc.data();
       return (/* html */
         `${cod(data.nombre)}`);
@@ -162,4 +168,3 @@ function errConsulta(e) {
   muestraError(e);
   consulta();
 }
-
