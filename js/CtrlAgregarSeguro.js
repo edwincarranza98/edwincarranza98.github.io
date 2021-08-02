@@ -7,25 +7,22 @@ import {
   muestraError
 } from "../lib/util.js";
 import {
-  muestraAlumnos
+  muestraSeguros
 } from "./navegacion.js";
 import {
   tieneRol
 } from "./seguridad.js";
 
-const daoAlumno =
+const daoSeguro =
   getFirestore().
-    collection("Alumno");
+    collection("Seguro");
 /** @type {HTMLFormElement} */
 const forma = document["forma"];
 getAuth().onAuthStateChanged(
   protege, muestraError);
 
-/** @param {import(
-    "../lib/tiposFire.js").User}
-    usuario */
-async function protege(usuario) {
-  if (tieneRol(usuario,
+async function protege(Asegurado) {
+  if (tieneRol(Asegurado,
     ["Administrador"])) {
     forma.addEventListener(
       "submit", guarda);
@@ -40,24 +37,32 @@ async function guarda(evt) {
       new FormData(forma);
     const matricula = getString(
         formData, "matricula").trim();  
-    const nombre = getString(formData, "nombre").trim();
+    const nombre = getString(formData, "Nombre Completo").trim();
+    const nombres = getString(formData, "Nombre Seguro").trim();
+    const auto = getString(formData, "Auto").trim();
+    const modeloa = getString(formData, "Modelo").trim();
+    const poliza = getString(formData, "Poliza").trim();
     const telefono = getString(formData, "telefono").trim();
-    const grupo = getString(formData, "grupo").trim();
+    const correo = getString(formData, "Correo").trim();
     const fecha = getString(formData, "fecha").trim();
     /**
      * @type {
         import("./tipos.js").
-                Alumno} */
+                } */
     const modelo = {
       matricula,
       nombre,
+      nombres,
+      auto,
+      modeloa,
+      poliza,
       telefono,
-      grupo,
+      correo,
       fecha 
     };
-    await daoAlumno.
+    await daoSeguro.
       add(modelo);
-    muestraAlumnos();
+    muestraSeguros();
   } catch (e) {
     muestraError(e);
   }
