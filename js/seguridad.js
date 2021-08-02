@@ -37,11 +37,11 @@ export async function
  * @param {string[]} roles
  * @returns {Promise<boolean>} */
 export async function
-  tieneRol(Asegurado, roles) {
-  if (Asegurado && Asegurado.email) {
+  tieneRol(asegurado, roles) {
+  if (asegurado && asegurado.email) {
     const rolIds =
       await cargaRoles(
-        Asegurado.email);
+        asegurado.email);
     for (const rol of roles) {
       if (rolIds.has(rol)) {
         return true;
@@ -80,8 +80,9 @@ export async function
         Usuario} */
     const data = doc.data();
     return new Set(
-      data.rolds || []);
+      data.rolIds || []);
   } else {
     return new Set();
   }
 }
+
