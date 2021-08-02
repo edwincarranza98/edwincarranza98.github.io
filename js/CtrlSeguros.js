@@ -14,9 +14,9 @@ import {
 /** @type {HTMLUListElement} */
 const lista = document.
   querySelector("#lista");
-const daoAlumno =
+const daoSeguro =
   getFirestore().
-    collection("Alumno");
+    collection("Seguro");
 
 getAuth().
   onAuthStateChanged(
@@ -25,15 +25,15 @@ getAuth().
 /** @param {import(
     "../lib/tiposFire.js").User}
     usuario */
-async function protege(usuario) {
-  if (tieneRol(usuario,
+async function protege(Asegurado) {
+  if (tieneRol(Asegurado,
     ["Administrador"])) {
     consulta();
   }
 }
 
 function consulta() {
-  daoAlumno.
+  daoSeguro.
     orderBy("nombre")
     .onSnapshot(
       htmlLista, errConsulta);
@@ -51,8 +51,7 @@ function htmlLista(snap) {
   } else {
     html += /* html */
       `<li class="vacio">
-        -- No hay alumnos
-        registrados. --
+        -- No hay Seguros Registrados. --
       </li>`;
   }
   lista.innerHTML = html;
@@ -65,7 +64,7 @@ function htmlLista(snap) {
 function htmlFila(doc) {
   /**
    * @type {import("./tipos.js").
-                  Alumno} */
+                  } */
   const data = doc.data();
   const matricula = cod(data.matricula);
   const nombre = cod(data.nombre);
@@ -79,7 +78,7 @@ function htmlFila(doc) {
   return ( /* html */
     `<li>
       <a class="fila" href=
-  "alumno.html?${parámetros}">
+  "Seguro.html?${parámetros}">
         <strong class="primario">
           ${matricula} ${nombre} ${dformat}
         </strong>
@@ -93,4 +92,5 @@ function errConsulta(e) {
   muestraError(e);
   consulta();
 }
+
 
