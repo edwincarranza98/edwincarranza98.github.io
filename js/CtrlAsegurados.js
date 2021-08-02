@@ -20,26 +20,23 @@ const lista = document.
 const firestore = getFirestore();
 const daoRol = firestore.
   collection("Rol");
-const daoAlumno = firestore.
-  collection("Alumno");
-const daoUsuario = firestore.
-  collection("Usuario");
+const daoSeguro = firestore.
+  collection("Seguro");
+const daoAsegurado = firestore.
+  collection("Asegurado");
 
 getAuth().onAuthStateChanged(
   protege, muestraError);
 
-/** @param {import(
-    "../lib/tiposFire.js").User}
-    usuario */
-async function protege(usuario) {
-  if (tieneRol(usuario,
+async function protege(Asegurado) {
+  if (tieneRol(Asegurado,
     ["Administrador"])) {
     consulta();
   }
 }
 
 function consulta() {
-  daoUsuario.onSnapshot(
+  daoAsegurado.onSnapshot(
     htmlLista, errConsulta);
 }
 
@@ -52,20 +49,17 @@ async function htmlLista(snap) {
   if (snap.size > 0) {
     /** @type {
           Promise<string>[]} */
-    let usuarios = [];
-    snap.forEach(doc => usuarios.
+    let Asegurados = [];
+    snap.forEach(doc => Asegurados.
       push(htmlFila(doc)));
     const htmlFilas =
-      await Promise.all(usuarios);
-    /* Junta el todos los
-     * elementos del arreglo en
-     * una cadena. */
+      await Promise.all(Asegurados);
+    
     html += htmlFilas.join("");
   } else {
     html += /* html */
       `<li class="vacio">
-        -- No hay usuarios
-        registrados. --
+        -- Por el momento no se tiene ningun Asegurado registrado. --
       </li>`;
   }
   lista.innerHTML = html;
@@ -82,9 +76,9 @@ async function htmlFila(doc) {
   const data = doc.data();
   const img = cod(
     await urlStorage(doc.id));
-  const alumno =
-    await buscaAlumno(
-      data.alumnoId);
+  const Seguro =
+    await buscaSeguro(
+      data.SeguroId);
   const roles =
     await buscaRoles(data.rolIds);
   const parámetros =
@@ -94,7 +88,7 @@ async function htmlFila(doc) {
     `<li>
       <a class="fila conImagen"
           href=
-    "usuario.html?${parámetros}">
+    "Asegurado.html?${parámetros}">
         <span class="marco">
           <img src="${img}"
             alt="Falta el Avatar">
@@ -106,7 +100,7 @@ async function htmlFila(doc) {
           </strong>
           <span
               class="secundario">
-            ${alumno}<br>
+            ${Seguro}<br>
             ${roles}
           </span>
         </span>
@@ -118,17 +112,17 @@ async function htmlFila(doc) {
  * pasatiempo en base a su id.
  * @param {string} id */
 async function
-  buscaAlumno(id) {
+  buscaSeguro(id) {
   if (id) {
     const doc =
-      await daoAlumno.
+      await daoSeguro.
         doc(id).
         get();
     if (doc.exists) {
       /**
        * @type {import(
           "./tipos.js").
-            Alumno} */
+            } */
       const data = doc.data();
       return (/* html */
         `${cod(data.nombre)}`);
@@ -168,3 +162,4 @@ function errConsulta(e) {
   muestraError(e);
   consulta();
 }
+
