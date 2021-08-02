@@ -38,15 +38,15 @@ getAuth().onAuthStateChanged(
  *    o null si no ha iniciado
  *    sesión. */
 async function
-  muestraSesión(Asegurado) {
-  if (Asegurado && Asegurado.email) {
+  muestraSesión(asegurado) {
+  if (asegurado && asegurado.email) {
     // Usuario aceptado.
     forma.email.value =
-      Asegurado.email || "";
+      asegurado.email || "";
     forma.nombre.value =
-      Asegurado.displayName || "";
+      asegurado.displayName || "";
     avatar.src =
-      Asegurado.photoURL || "";
+      asegurado.photoURL || "";
     forma.terminarSesión.
       addEventListener(
         "click", terminaSesión);
@@ -55,3 +55,4 @@ async function
     iniciaSesión();
   }
 }
+
