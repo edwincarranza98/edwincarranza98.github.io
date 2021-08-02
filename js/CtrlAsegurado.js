@@ -10,23 +10,23 @@ import {
   muestraError
 } from "../lib/util.js";
 import {
-  muestraUsuarios
+  muestraAsegurados
 } from "./navegacion.js";
 import {
   tieneRol
 } from "./seguridad.js";
 import {
   checksRoles,
-  guardaUsuario,
-  selectAlumnos
-} from "./usuarios.js";
+  guardaAsegurado,
+  selectSeguros
+} from "./CtrlAsegurados";
 
 const params =
   new URL(location.href).
     searchParams;
 const id = params.get("id");
-const daoUsuario = getFirestore().
-  collection("Usuario");
+const daoAsegurado = getFirestore().
+  collection("Asegurado");
 /** @type {HTMLFormElement} */
 const forma = document["forma"];
 const img = document.
@@ -37,11 +37,8 @@ const listaRoles = document.
 getAuth().onAuthStateChanged(
   protege, muestraError);
 
-/** @param {import(
-    "../lib/tiposFire.js").User}
-    usuario */
-async function protege(usuario) {
-  if (tieneRol(usuario,
+async function protege(Asegurado) {
+  if (tieneRol(Asegurado,
     ["Administrador"])) {
     busca();
   }
@@ -49,7 +46,7 @@ async function protege(usuario) {
 
 async function busca() {
   try {
-    const doc = await daoUsuario.
+    const doc = await daoAsegurado.
       doc(id).
       get();
     if (doc.exists) {
@@ -57,9 +54,9 @@ async function busca() {
       forma.cue.value = id || "";
       img.src =
         await urlStorage(id);
-      selectAlumnos(
-        forma.alumnoId,
-        data.alummnoId)
+      selectSeguros(
+        forma.SeguroId,
+        data.SeguroId)
       checksRoles(
         listaRoles, data.rolIds);
       forma.addEventListener(
@@ -70,13 +67,13 @@ async function busca() {
     }
   } catch (e) {
     muestraError(e);
-    muestraUsuarios();
+    muestraAsegurados();
   }
 }
 
 /** @param {Event} evt */
 async function guarda(evt) {
-  await guardaUsuario(evt,
+  await guardaAsegurado(evt,
     new FormData(forma), id);
 }
 
@@ -84,10 +81,10 @@ async function elimina() {
   try {
     if (confirm("Confirmar la " +
       "eliminación")) {
-      await daoUsuario.
+      await daoAsegurado.
         doc(id).delete();
       await eliminaStorage(id);
-      muestraUsuarios();
+      muestraAsegurados();
     }
   } catch (e) {
     muestraError(e);
