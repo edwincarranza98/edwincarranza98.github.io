@@ -8,7 +8,6 @@ import {
   cod, getForánea, muestraError
 } from "../lib/util.js";
 import {
-  muestraAsegurados,
   muestraAsegurados
 } from "./navegacion.js";
 
@@ -63,7 +62,7 @@ function
       "selected" : "";
   /**
    * @type {import("./tipos.js").
-                  } */
+                  Alumno} */
   const data = doc.data();
   return (/* html */
     `<option
@@ -148,15 +147,15 @@ export async function
     id) {
   try {
     evt.preventDefault();
-    const SeguroId =
+    const seguroId =
       getForánea(formData,
-        "SeguroId");
+        "seguroId");
     const rolIds =
       formData.getAll("rolIds");
     await daoAsegurado.
       doc(id).
       set({
-        SeguroId,
+        seguroId,
         rolIds
       });
     const avatar =
@@ -167,3 +166,4 @@ export async function
     muestraError(e);
   }
 }
+
